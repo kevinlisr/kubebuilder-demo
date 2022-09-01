@@ -2,6 +2,7 @@
 FROM golang:1.17 as builder
 
 WORKDIR /workspace
+ENV GOPROXY=https://goproxy.io
 # Copy the Go Modules manifests
 COPY go.mod go.mod
 COPY go.sum go.sum
