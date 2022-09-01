@@ -1,0 +1,16 @@
+domain: nancal.com
+layout:
+- go.kubebuilder.io/v3
+projectName: kubebuilder-demo
+repo: github.com/kubebuilder-demo
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: nancal.com
+  group: cloudproduce
+  kind: Lezao
+  path: github.com/kubebuilder-demo/api/v1beta1
+  version: v1beta1
+version: "3"
