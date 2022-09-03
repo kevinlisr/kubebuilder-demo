@@ -1,0 +1,45 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: cncamp-golang
+spec:
+  type: git
+  params:
+    - name: url
+      value: https://github.com/kevinlisr/kubebuilder-demo.git
+    - name: revision
+      value: master
+  secrets:
+    - fieldName: authToken
+      secretName: github-secrets
+      secretKey: token
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-secrets
+type: Opaque
+data:
+  token: aHR0cHM6Ly9naXRodWIuY29tL2tldmlubGlzci9nb2xhbmcuZ2l0Cg== # in base64 encoded form
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: docker-auth
+type: Opaque
+stringData: 
+  config.json: |-
+    {
+      "auths": {
+        "https://index.docker.io/v1/": {
+          "auth": "a2V2aW5zdHVkeToxODYzMzAzMTEyMWt1bw=="
+        }
+      }
+    }
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cncamp-sa
+secrets:
+- name: docker-auth
